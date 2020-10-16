@@ -31,10 +31,17 @@ int GetCurrentWlanConnection(WlanConnectionInfo* Info) {
 
     @autoreleasepool {
         CWWiFiClient* Client = CWWiFiClient.sharedWiFiClient;
+        if (nil == Client) {
+            return (int)WlanErrorCode::InterfaceUnavailable;
+        }
 
         CWInterface* currentInterface = Client.interface;
-        if (false == [currentInterface powerOn]) {
+        if (nil == currentInterface || false == [currentInterface powerOn]) {
             return (int)WlanErrorCode::InterfaceUnavailable;
+        }
+
+        if (kCWInterfaceModeNone == [currentInterface interfaceMode]) {
+            return (int)WlanErrorCode::InterfaceNotConnected;
         }
 
         StringFromNSString(&Info->InterfaceName, [currentInterface interfaceName]);

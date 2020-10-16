@@ -7,7 +7,8 @@
 enum class WlanErrorCode {
 	Success = 0,
 	InvalidParamter = 1,
-	InterfaceUnavailable = 2
+	InterfaceUnavailable = 2,
+	InterfaceNotConnected = 3
 };
 
 // Holds info about a wlan connection.
